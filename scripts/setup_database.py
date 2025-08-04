@@ -34,9 +34,9 @@ def setup_initial_data():
                 }
             )
             if created:
-                print(f"Created material: {material.name} ({material.points_per_kg} pts/kg)")
+                print(f"[+] Created material: {material.name} ({material.points_per_kg} pts/kg)")
             else:
-                print(f"Material already exists: {material.name}")
+                print(f"[-] Material already exists: {material.name}")
         
         # Create sample machines
         machines_data = [
@@ -54,9 +54,9 @@ def setup_initial_data():
                 }
             )
             if created:
-                print(f"Created machine: {machine.machine_id} at {machine.location}")
+                print(f"[+] Created machine: {machine.machine_id} at {machine.location}")
             else:
-                print(f"Machine already exists: {machine.machine_id}")
+                print(f"[-] Machine already exists: {machine.machine_id}")
         
         # Create a test user
         test_user, created = User.objects.get_or_create(
@@ -70,20 +70,24 @@ def setup_initial_data():
         if created:
             test_user.set_password('testpass123')
             test_user.save()
-            print(f"Created test user: {test_user.username}")
+            print(f"[+] Created test user: {test_user.username}")
             
             # Create user profile
             profile, profile_created = UserProfile.objects.get_or_create(user=test_user)
             if profile_created:
-                print(f"Created user profile for: {test_user.username}")
+                print(f"[+] Created user profile for: {test_user.username}")
         else:
-            print(f"Test user already exists: {test_user.username}")
+            print(f"[-] Test user already exists: {test_user.username}")
         
-        print("\n=== Setup is completed successfully ===")
-
+        print("\n=== SETUP COMPLETED SUCCESSFULLY! ===")
+        print("\nYou can now:")
+        print("1. Start the server: python manage.py runserver")
+        print("2. Login with: username='testuser', password='testpass123'")
+        print("3. Access admin at: http://localhost:8000/admin/")
+        print("4. Test API at: http://localhost:8000/api/")
         
     except Exception as e:
-        print(f"Error setting up initial data: {str(e)}")
+        print(f"[ERROR] Error setting up initial data: {str(e)}")
         import traceback
         traceback.print_exc()
 
